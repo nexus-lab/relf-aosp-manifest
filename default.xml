@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 
-  <remote  name="aosp"
-           fetch=".." />
+  <remote name="aosp"
+          fetch="https://android.googlesource.com"
+          review="https://android-review.googlesource.com/" />
+
+  <remote name="relf"
+          fetch="https://github.com/nexus-lab"
+          revision="refs/heads/android-6.0.1_r81" />
+
   <default revision="refs/tags/android-6.0.1_r81"
            remote="aosp"
            sync-j="4" />
@@ -477,5 +483,13 @@
   <project path="tools/studio/translation" name="platform/tools/studio/translation" groups="notdefault,tools" />
   <project path="tools/swt" name="platform/tools/swt" groups="notdefault,tools" />
   <project path="tools/tradefederation" name="platform/tools/tradefederation" groups="notdefault,tradefed" />
-
+  
+  <!-- ReLF Modifications -->
+  <remove-project name="platform/build" />
+  <remove-project name="platform/system/core" />
+  <project path="build" name="relf-aosp-build" remote="relf" >
+    <copyfile src="core/root.mk" dest="Makefile" />
+  </project>
+  <project path="system/core" name="relf-aosp-system-core" remote="relf" />
+  <project path="vendor/relf" name="relf-aosp-vendor" remote="relf" revision="refs/heads/marshmallow" />
 </manifest>
